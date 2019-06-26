@@ -20,10 +20,12 @@ fn main() {
         .map(|chunk| {
             println!("CHUNK[[\n{}]]", from_utf8(&chunk).unwrap());
             chunk
-        }).concat2()
+        })
+        .concat2()
         .map(|message| {
             println!("MESSAGE[[\n{}]]", from_utf8(&message).unwrap());
-        }).map_err(|error| {
+        })
+        .map_err(|error| {
             eprintln!("ERROR: {}", error);
         });
 

@@ -394,7 +394,8 @@ impl MultiPartKind {
                 Related => "related",
             },
             boundary
-        ).parse()
+        )
+        .parse()
         .unwrap()
     }
 
@@ -756,7 +757,8 @@ mod test {
         let part: SinglePart<String> = SinglePart::builder()
             .header(header::ContentType(
                 "text/plain; charset=utf8".parse().unwrap(),
-            )).header(header::ContentTransferEncoding::Binary)
+            ))
+            .header(header::ContentTransferEncoding::Binary)
             .body(String::from("Текст письма в уникоде"));
 
         assert_eq!(
@@ -775,7 +777,8 @@ mod test {
         let part: SinglePart<String> = SinglePart::builder()
             .header(header::ContentType(
                 "text/plain; charset=utf8".parse().unwrap(),
-            )).header(header::ContentTransferEncoding::QuotedPrintable)
+            ))
+            .header(header::ContentTransferEncoding::QuotedPrintable)
             .body(String::from("Текст письма в уникоде"));
 
         assert_eq!(
@@ -795,7 +798,8 @@ mod test {
         let part: SinglePart<String> = SinglePart::builder()
             .header(header::ContentType(
                 "text/plain; charset=utf8".parse().unwrap(),
-            )).header(header::ContentTransferEncoding::Base64)
+            ))
+            .header(header::ContentTransferEncoding::Base64)
             .body(String::from("Текст письма в уникоде"));
 
         assert_eq!(
@@ -817,20 +821,24 @@ mod test {
                 SinglePart::builder()
                     .header(header::ContentType(
                         "text/plain; charset=utf8".parse().unwrap(),
-                    )).header(header::ContentTransferEncoding::Binary)
+                    ))
+                    .header(header::ContentTransferEncoding::Binary)
                     .body(String::from("Текст письма в уникоде")),
-            )).singlepart(
+            ))
+            .singlepart(
                 SinglePart::builder()
                     .header(header::ContentType(
                         "text/plain; charset=utf8".parse().unwrap(),
-                    )).header(header::ContentDisposition {
+                    ))
+                    .header(header::ContentDisposition {
                         disposition: header::DispositionType::Attachment,
                         parameters: vec![header::DispositionParam::Filename(
                             header::Charset::Ext("utf-8".into()),
                             None,
                             "example.c".as_bytes().into(),
                         )],
-                    }).header(header::ContentTransferEncoding::Binary)
+                    })
+                    .header(header::ContentTransferEncoding::Binary)
                     .body(String::from("int main() { return 0; }")),
             );
 

@@ -327,10 +327,13 @@ mod test {
                 vec![Mailbox::new(
                     Some("Каи".into()),
                     "kayo@example.com".parse().unwrap(),
-                )].into(),
-            )).header(header::To(
+                )]
+                .into(),
+            ))
+            .header(header::To(
                 vec!["Pony O.P. <pony@domain.tld>".parse().unwrap()].into(),
-            )).header(header::Subject("яңа ел белән!".into()))
+            ))
+            .header(header::Subject("яңа ел белән!".into()))
             .body("Happy new year!");
 
         assert_eq!(
@@ -356,10 +359,13 @@ mod test {
                 vec![Mailbox::new(
                     Some("Каи".into()),
                     "kayo@example.com".parse().unwrap(),
-                )].into(),
-            )).header(header::To(
+                )]
+                .into(),
+            ))
+            .header(header::To(
                 vec!["Pony O.P. <pony@domain.tld>".parse().unwrap()].into(),
-            )).header(header::Subject("яңа ел белән!".into()))
+            ))
+            .header(header::Subject("яңа ел белән!".into()))
             .body("Happy new year!".into());
 
         let body = email.into_stream();

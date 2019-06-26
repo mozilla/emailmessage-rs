@@ -255,7 +255,8 @@ impl FromStr for Mailboxes {
                         Ok(Mailbox::new(None, email))
                     }
                 })
-            }).collect::<Result<Vec<_>, _>>()
+            })
+            .collect::<Result<Vec<_>, _>>()
             .map(Mailboxes)
     }
 }
@@ -371,7 +372,10 @@ mod test {
     fn parse_with_unicode() {
         assert_eq!(
             "Foo🦀 <٢fooΔ@example.com>".parse(),
-            Ok(Mailbox::new(Some("Foo🦀".into()), "٢fooΔ@example.com".parse().unwrap()))
+            Ok(Mailbox::new(
+                Some("Foo🦀".into()),
+                "٢fooΔ@example.com".parse().unwrap()
+            ))
         );
     }
 }

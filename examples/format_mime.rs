@@ -12,7 +12,8 @@ fn main() {
             SinglePart::builder()
                 .header(header::ContentType(
                     "text/plain; charset=utf8".parse().unwrap(),
-                )).header(header::ContentTransferEncoding::QuotedPrintable)
+                ))
+                .header(header::ContentTransferEncoding::QuotedPrintable)
                 .body("Привет, мир!"),
         );
 

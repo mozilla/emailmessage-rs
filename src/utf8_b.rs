@@ -1,10 +1,11 @@
 use base64;
-use std::str::{from_utf8};
+use std::str::from_utf8;
 
 fn allowed_char(c: char) -> bool {
-    c >= 1 as char && c <= 9 as char ||
-        c == 11 as char || c == 12 as char ||
-        c >= 14 as char && c <= 127 as char
+    c >= 1 as char && c <= 9 as char
+        || c == 11 as char
+        || c == 12 as char
+        || c >= 14 as char && c <= 127 as char
 }
 
 pub fn encode(s: &str) -> String {
@@ -37,7 +38,7 @@ pub fn decode(s: &str) -> Option<String> {
 
 #[cfg(test)]
 mod test {
-    use super::{encode, decode};
+    use super::{decode, encode};
 
     #[test]
     fn encode_ascii() {
@@ -51,11 +52,17 @@ mod test {
 
     #[test]
     fn encode_utf8() {
-        assert_eq!(&encode("Привет, мир!"), "=?utf-8?b?0J/RgNC40LLQtdGCLCDQvNC40YAh?=");
+        assert_eq!(
+            &encode("Привет, мир!"),
+            "=?utf-8?b?0J/RgNC40LLQtdGCLCDQvNC40YAh?="
+        );
     }
 
     #[test]
     fn decode_utf8() {
-        assert_eq!(decode("=?utf-8?b?0J/RgNC40LLQtdGCLCDQvNC40YAh?="), Some("Привет, мир!".into()));
+        assert_eq!(
+            decode("=?utf-8?b?0J/RgNC40LLQtdGCLCDQvNC40YAh?="),
+            Some("Привет, мир!".into())
+        );
     }
 }

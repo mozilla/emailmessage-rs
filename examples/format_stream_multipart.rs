@@ -15,37 +15,45 @@ fn main() {
                     SinglePart::quoted_printable()
                         .header(header::ContentType(
                             "text/plain; charset=utf8".parse().unwrap(),
-                        )).body("Привет, мир!".into()),
-                ).multipart(
+                        ))
+                        .body("Привет, мир!".into()),
+                )
+                .multipart(
                     MultiPart::related()
                         .singlepart(
                             SinglePart::eight_bit()
                                 .header(header::ContentType(
                                     "text/html; charset=utf8".parse().unwrap(),
-                                )).body(
+                                ))
+                                .body(
                                     "<p><b>Hello</b>, <i>world</i>! <img src=smile.png></p>".into(),
                                 ),
-                        ).singlepart(
+                        )
+                        .singlepart(
                             SinglePart::base64()
                                 .header(header::ContentType("image/png".parse().unwrap()))
                                 .header(header::ContentDisposition {
                                     disposition: header::DispositionType::Inline,
                                     parameters: vec![],
-                                }).body("<smile-raw-image-data>".into()),
+                                })
+                                .body("<smile-raw-image-data>".into()),
                         ),
                 ),
-        ).singlepart(
+        )
+        .singlepart(
             SinglePart::seven_bit()
                 .header(header::ContentType(
                     "text/plain; charset=utf8".parse().unwrap(),
-                )).header(header::ContentDisposition {
+                ))
+                .header(header::ContentDisposition {
                     disposition: header::DispositionType::Attachment,
                     parameters: vec![header::DispositionParam::Filename(
                         header::Charset::Ext("utf-8".into()),
                         None,
                         "example.c".as_bytes().into(),
                     )],
-                }).body("int main() { return 0; }".into()),
+                })
+                .body("int main() { return 0; }".into()),
         );
 
     let m = Message::builder()
@@ -60,10 +68,12 @@ fn main() {
         .map(|chunk| {
             println!("CHUNK[[\n{}]]", from_utf8(&chunk).unwrap());
             chunk
-        }).concat2()
+        })
+        .concat2()
         .map(|message| {
             println!("MESSSAGE[[\n{}]]", from_utf8(&message).unwrap());
-        }).map_err(|error| {
+        })
+        .map_err(|error| {
             eprintln!("ERROR: {:?}", error);
         });
 

@@ -362,11 +362,13 @@ mod test {
         assert_eq!(
             c.encode_all(
                 &"Текст письма в уникоде подлиннее.".into_buf()
-            ).map(|s| from_utf8(&s).map(|s| String::from(s))),
+            )
+            .map(|s| from_utf8(&s).map(|s| String::from(s))),
             Ok(Ok(concat!(
                 "0KLQtdC60YHRgiDQv9C40YHRjNC80LAg0LIg0YPQvdC40LrQ\r\n",
                 "vtC00LUg0L/QvtC00LvQuNC90L3QtdC1Lg=="
-            ).into()))
+            )
+            .into()))
         );
     }
 
