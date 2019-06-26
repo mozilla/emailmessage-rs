@@ -4,12 +4,10 @@ use regex::Regex;
 use std::net::IpAddr;
 
 lazy_static! {
-    // Regex from the specs
-    // https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address
-    // It will mark esoteric email addresses like quoted string as invalid
-    static ref USER_RE: Regex = Regex::new(r"^(?i)[a-z0-9.!#$%&'*+/=?^_`{|}~-]+\z").unwrap();
+    // MOZHACK: Match the regexes from mozilla/fxa-email-service
+    static ref USER_RE: Regex = Regex::new(r"^(?i)[a-z0-9.\pL\pN!#$%&'*+/=?^_`{|}~-]{1,64}$").unwrap();
     static ref DOMAIN_RE: Regex = Regex::new(
-        r"(?i)^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)*$"
+        r"^(?i)^[a-z0-9](?:[a-z0-9-]{0,253}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,253}[a-z0-9])?)+$"
     ).unwrap();
     // literal form, ipv4 or ipv6 address (SMTP 4.1.3)
     static ref LITERAL_RE: Regex = Regex::new(r"(?i)\[([A-f0-9:\.]+)\]\z").unwrap();

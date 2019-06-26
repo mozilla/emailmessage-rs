@@ -366,4 +366,12 @@ mod test {
             Ok(Mailbox::new(None, "kayo@example.com".parse().unwrap()))
         );
     }
+
+    #[test]
+    fn parse_with_unicode() {
+        assert_eq!(
+            "Foo🦀 <٢fooΔ@example.com>".parse(),
+            Ok(Mailbox::new(Some("Foo🦀".into()), "٢fooΔ@example.com".parse().unwrap()))
+        );
+    }
 }
